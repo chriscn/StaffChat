@@ -17,16 +17,21 @@ public final class StaffChat extends JavaPlugin {
     public ArrayList<UUID> inAdminChat = new ArrayList<>();
     public ArrayList<UUID> inStaffChat = new ArrayList<>();
 
-    public Permission adminChat = new Permission("staffchat.adminchat");
-    public Permission staffChat = new Permission("staffchat.staffchat");
+    public Permission adminChatRead = new Permission("sc.admin.read");
+    public Permission adminChatWrite = new Permission("sc.admin.write")
+    public Permission staffChatRead = new Permission("sc.staff.read");
+    public Permission staffChatWrite = new Permission("sc.staff.write")
 
     public FileConfiguration config;
 
     @Override
     public void onEnable() {
         // Plugin startup logic
-        Bukkit.getPluginManager().addPermission(adminChat);
-        Bukkit.getPluginManager().addPermission(staffChat);
+        Bukkit.getPluginManager().addPermission(adminChatRead);
+        Bukkit.getPluginManager().addPermission(adminChatWrite);
+        Bukkit.getPluginManager().addPermission(staffChatRead);
+        Bukkit.getPluginManager().addPermission(staffChatWrite);
+
         Bukkit.getPluginManager().registerEvents(new PlayerChatEvent(this), this);
 
         getCommand("staffchat").setExecutor(new StaffChatCommand(this));
