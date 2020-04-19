@@ -18,9 +18,9 @@ public final class StaffChat extends JavaPlugin {
     public ArrayList<UUID> inStaffChat = new ArrayList<>();
 
     public Permission adminChatRead = new Permission("sc.admin.read");
-    public Permission adminChatWrite = new Permission("sc.admin.write")
+    public Permission adminChatWrite = new Permission("sc.admin.write");
     public Permission staffChatRead = new Permission("sc.staff.read");
-    public Permission staffChatWrite = new Permission("sc.staff.write")
+    public Permission staffChatWrite = new Permission("sc.staff.write");
 
     public FileConfiguration config;
 
