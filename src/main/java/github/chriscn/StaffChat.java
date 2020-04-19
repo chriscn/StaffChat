@@ -2,6 +2,7 @@ package github.chriscn;
 
 import github.chriscn.command.StaffChatCommand;
 import github.chriscn.events.PlayerChatEvent;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -39,6 +40,6 @@ public final class StaffChat extends JavaPlugin {
     }
 
     public void noPermission(CommandSender commandSender) {
-        commandSender.sendMessage(config.getString("message.no_permission"));
+        commandSender.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getString("message.no_permission")));
     }
 }
