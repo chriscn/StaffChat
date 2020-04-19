@@ -1,0 +1,6 @@
+name: StaffChat
+version: ${project.version}
+main: github.chriscn.StaffChat
+api-version: 1.13
+authors: [Thorin]
+description: A plugin that allows your Staff Members to communicate in private.
