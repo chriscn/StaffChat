@@ -1,3 +1,5 @@
 message:
   no_permission: "&cYou do not have permission to use this command"
   unknown_channel: "&cThe specified channel does not exist"
+staff:
+  prefix: "[STAFF]"
