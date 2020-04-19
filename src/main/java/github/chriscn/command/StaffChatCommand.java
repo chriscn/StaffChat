@@ -17,7 +17,7 @@ public class StaffChatCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (sender.hasPermission(plugin.staffChat)) {
+        if (sender.hasPermission(plugin.staffChatWrite)) {
             StringBuilder sb = new StringBuilder();
 
             for (int i = 0; i < args.length; i++) {
@@ -27,7 +27,7 @@ public class StaffChatCommand implements CommandExecutor {
             String msg = sb.toString();
 
             for (Player p : Bukkit.getOnlinePlayers()) {
-                if (plugin.inStaffChat.contains(p.getUniqueId())) {
+                if (p.hasPermission(plugin.staffChatRead)) {
                     p.sendMessage("[STAFF] <" + sender.getName() + "> " + msg);
                 }
             }
