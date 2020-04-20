@@ -5,16 +5,21 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.event.Event;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.permissions.Permission;
 
+import java.util.ArrayList;
+import java.util.UUID;
+
 public class VirtualChannel implements Listener, CommandExecutor {
 
     private String name;
     private String commandName;
+    private ArrayList<UUID> activeParticipation = new ArrayList<>();
+
     public Permission readPermission;
     public Permission writePermission;
 
@@ -29,6 +34,14 @@ public class VirtualChannel implements Listener, CommandExecutor {
 
         new StaffChat().getCommand(commandName).setExecutor(this);
         Bukkit.getPluginManager().registerEvents(this, new StaffChat());
+    }
+
+    public void activeParticipants(Player player) {
+        if (player.hasPermission(writePermission)) {
+            activeParticipation.add(player.getUniqueId());
+        } else {
+            new StaffChat().noPermission(player);
+        }
     }
 
     @EventHandler
