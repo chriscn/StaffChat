@@ -22,7 +22,7 @@ public class StaffChatCommand implements CommandExecutor {
             StringBuilder sb = new StringBuilder();
 
             for (int i = 0; i < args.length; i++) {
-                sb.append(args[i]);
+                sb.append(args[i]).append(" ");
             }
 
             String msg = sb.toString();
