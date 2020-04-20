@@ -32,6 +32,8 @@ public class ChannelCommand implements TabCompleter {
                 plugin.playerChannel.remove(player.getUniqueId());
             }
 
+            player.sendMessage(args.toString());
+
             switch (args[0].toLowerCase()) {
                 case "all":
                     plugin.playerChannel.put(player.getUniqueId(), ChannelEnum.ALL);
