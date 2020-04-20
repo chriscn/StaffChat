@@ -3,6 +3,7 @@ package github.chriscn;
 import github.chriscn.command.ChannelCommand;
 import github.chriscn.command.StaffChatCommand;
 import github.chriscn.events.PlayerChatEvent;
+import github.chriscn.util.ChannelEnum;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -11,6 +12,7 @@ import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.UUID;
 
 public final class StaffChat extends JavaPlugin {
@@ -24,6 +26,8 @@ public final class StaffChat extends JavaPlugin {
     public Permission staffChatWrite = new Permission("sc.staff.write");
 
     public FileConfiguration config;
+
+    public HashMap<UUID, ChannelEnum> playerChannel = new HashMap<>();
 
     @Override
     public void onEnable() {
