@@ -1,6 +1,7 @@
 package github.chriscn.events;
 
 import github.chriscn.StaffChat;
+import github.chriscn.util.ChannelEnum;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -19,7 +20,12 @@ public class PlayerChatEvent implements Listener {
     @EventHandler
     public void onPlayerChatEvent(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
-        UUID uuid = player.getUniqueId();
+
+        if (!(plugin.playerChannel.get(player.getUniqueId()) == ChannelEnum.ALL)) {
+            if (plugin.playerChannel.get(player.getUniqueId()) == ChannelEnum.STAFF) {
+                event.setCancelled(true);
+            }
+        }
     }
 
 }
