@@ -82,7 +82,7 @@ public final class StaffChat extends JavaPlugin {
     public ArrayList<UUID> allWithKey(ChannelEnum channel) {
         ArrayList<UUID> result = new ArrayList<>();
         playerChannel.forEach((u, e) -> {
-            if (e == channel) {
+            if (channel == e) {
                 result.add(u);
             }
         });
