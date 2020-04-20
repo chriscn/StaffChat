@@ -1,5 +1,6 @@
 package github.chriscn;
 
+import github.chriscn.command.ChannelCommand;
 import github.chriscn.command.StaffChatCommand;
 import github.chriscn.events.PlayerChatEvent;
 import net.md_5.bungee.api.ChatColor;
@@ -35,6 +36,7 @@ public final class StaffChat extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerChatEvent(this), this);
 
         getCommand("staffchat").setExecutor(new StaffChatCommand(this));
+        getCommand("channel").setTabCompleter(new ChannelCommand(this));
 
         this.config = getConfig();
     }
