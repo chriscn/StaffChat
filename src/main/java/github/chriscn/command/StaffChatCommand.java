@@ -1,6 +1,7 @@
 package github.chriscn.command;
 
 import github.chriscn.StaffChat;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -28,7 +29,7 @@ public class StaffChatCommand implements CommandExecutor {
 
             for (Player p : Bukkit.getOnlinePlayers()) {
                 if (p.hasPermission(plugin.staffChatRead)) {
-                    p.sendMessage("[STAFF] <" + sender.getName() + "> " + msg);
+                    p.sendMessage(ChatColor.BLUE + "[STAFF] <" + sender.getName() + "> " + msg);
                 }
             }
         } else {
