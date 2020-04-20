@@ -47,4 +47,8 @@ public final class StaffChat extends JavaPlugin {
     public void noPermission(CommandSender commandSender) {
         commandSender.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getString("message.no_permission")));
     }
+
+    public void unknownChannel(CommandSender commandSender) {
+        commandSender.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getString("messages.unknown_channel")));
+    }
 }
