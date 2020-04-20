@@ -10,3 +10,5 @@ commands:
   channel:
     usage: /channel <all/staff/admin>
     aliases: [c]
+  listchannel:
+    usage: /listchannel
