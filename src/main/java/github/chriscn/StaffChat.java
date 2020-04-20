@@ -48,7 +48,7 @@ public final class StaffChat extends JavaPlugin {
             if (sender.hasPermission(adminChatWrite)) {
                    for (ChannelEnum v : ChannelEnum.values()) {
                        sender.sendMessage("Channel: " + v.getName());
-                       sender.sendMessage(allWithKey(v).toString());
+                       sender.sendMessage((allWithKey(v).toString().isEmpty() ? "No Players" : allWithKey(v).toString());
                    }
             } else {
                 noPermission(sender);
