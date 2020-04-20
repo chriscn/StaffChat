@@ -1,5 +1,6 @@
 message:
   no_permission: "&cYou do not have permission to use this command"
   unknown_channel: "&cThe specified channel does not exist"
+  not_player: "&cYou must be a player to use this command."
 staff:
   prefix: "[STAFF]"

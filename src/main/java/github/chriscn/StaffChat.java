@@ -38,12 +38,15 @@ public final class StaffChat extends JavaPlugin {
         getCommand("staffchat").setExecutor(new StaffChatCommand(this));
         getCommand("channel").setTabCompleter(new ChannelCommand(this));
 
+        saveDefaultConfig();
+
         this.config = getConfig();
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+        this.saveConfig();
     }
 
     public void noPermission(CommandSender commandSender) {
@@ -52,5 +55,9 @@ public final class StaffChat extends JavaPlugin {
 
     public void unknownChannel(CommandSender commandSender) {
         commandSender.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getString("messages.unknown_channel")));
+    }
+
+    public void notPlayer(CommandSender commandSender) {
+        commandSender.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getString("message.not_player")));
     }
 }
