@@ -15,6 +15,6 @@ public enum ChannelEnum {
     }
 
     public String getName() {
-        return this.getName();
+        return this.name;
     }
 }
