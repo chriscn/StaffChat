@@ -1,4 +1,4 @@
-package github.chriscn.command;
+package github.chriscn.channel;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
