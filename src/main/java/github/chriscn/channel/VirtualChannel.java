@@ -1,5 +1,6 @@
 package github.chriscn.channel;
 
+import github.chriscn.StaffChat;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -25,6 +26,9 @@ public class VirtualChannel implements Listener, CommandExecutor {
 
         Bukkit.getPluginManager().addPermission(readPermission);
         Bukkit.getPluginManager().addPermission(writePermission);
+
+        new StaffChat().getCommand(commandName).setExecutor(this);
+        Bukkit.getPluginManager().registerEvents(this, new StaffChat());
     }
 
     @EventHandler
