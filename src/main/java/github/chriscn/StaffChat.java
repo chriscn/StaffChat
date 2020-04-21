@@ -1,13 +1,9 @@
 package github.chriscn;
 
-import github.chriscn.command.ChannelCommand;
-import github.chriscn.command.StaffChatCommand;
 import github.chriscn.events.PlayerChatEvent;
 import github.chriscn.util.ChannelEnum;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.permissions.Permission;
