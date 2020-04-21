@@ -45,7 +45,7 @@ public class ChannelCommand implements CommandExecutor {
 
                 } else {
                     plugin.unknownChannel(player);
-                    player.sendMessage(ChatColor.YELLOW + "Use /channel to list your avilable channels.");
+                    player.sendMessage(ChatColor.YELLOW + "Use /channel to list your available channels.");
                     return false;
                 }
 
