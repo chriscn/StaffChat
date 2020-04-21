@@ -15,25 +15,24 @@ import org.bukkit.permissions.Permission;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class VirtualChannel implements Listener, CommandExecutor {
+public class VirtualChannel implements Listener {
 
     private String name;
-    private String commandName;
     private ArrayList<UUID> activeParticipation = new ArrayList<>();
 
     public Permission readPermission;
     public Permission writePermission;
 
-    public VirtualChannel(String name, String readPermissionNode, String writePermissionNode, String commandName) {
+    StaffChat plugin = new StaffChat();
+
+    public VirtualChannel(String name) {
         this.name = name;
-        this.commandName = commandName;
-        this.readPermission = new Permission(readPermissionNode);
-        this.writePermission = new Permission(writePermissionNode);
+        this.readPermission = new Permission(plugin.config.getString("channel." + this.name + ".read"));
+        this.writePermission = new Permission(plugin.config.getString("channel." + this.name + ".write"));
 
         Bukkit.getPluginManager().addPermission(readPermission);
         Bukkit.getPluginManager().addPermission(writePermission);
 
-        new StaffChat().getCommand(commandName).setExecutor(this);
         Bukkit.getPluginManager().registerEvents(this, new StaffChat());
     }
 
@@ -58,11 +57,6 @@ public class VirtualChannel implements Listener, CommandExecutor {
                 }
             }
         }
-    }
-
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        return false;
     }
 
     private String messageFormat(String configPath, String message) {
