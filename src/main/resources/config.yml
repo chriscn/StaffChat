@@ -5,9 +5,9 @@ message:
 channel:
   staff:
     format: "&9[STAFF] {player} {message}"
-    readPermission: "sc.staff.read"
-    writePermission: "sc.staff.write"
+    read: "sc.staff.read"
+    write: "sc.staff.write"
   admin:
     format: "&c[ADMIN] {player} {message}"
-    readPermission: "sc.admin.read"
-    writePermission: "sc.admin.write"
+    read: "sc.admin.read"
+    write: "sc.admin.write"
