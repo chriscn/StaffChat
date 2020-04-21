@@ -5,10 +5,9 @@ api-version: 1.13
 authors: [Thorin]
 description: A plugin that allows your Staff Members to communicate in private.
 commands:
-  staffchat:
-    usage: /staffchat <msg>
+  chat:
+    usage: /chat <channel> <message>
+    description: Use this command to chat with your friends in the specified channel.
   channel:
-    usage: /channel <all/staff/admin>
-    aliases: [c]
-  listchannel:
-    usage: /listchannel
+    usage: /channel <channel>
+    description: Change your speaking channel; so rather than using the command you can automatically speak in that channel.
