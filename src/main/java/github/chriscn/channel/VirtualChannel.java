@@ -1,6 +1,7 @@
 package github.chriscn.channel;
 
 import github.chriscn.StaffChat;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -36,7 +37,7 @@ public class VirtualChannel implements Listener, CommandExecutor {
         Bukkit.getPluginManager().registerEvents(this, new StaffChat());
     }
 
-    public void activeParticipants(Player player) {
+    public void addPlayer(Player player) {
         if (player.hasPermission(writePermission)) {
             activeParticipation.add(player.getUniqueId());
         } else {
@@ -46,11 +47,25 @@ public class VirtualChannel implements Listener, CommandExecutor {
 
     @EventHandler
     public void onPlayerChatEvent(AsyncPlayerChatEvent event) {
+        Player player = event.getPlayer();
+        if (activeParticipation.contains(player.getUniqueId())) {
+            event.setCancelled(true);
 
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                if (p.hasPermission(this.readPermission)) {
+                    // p.sendMessage(messageFormat(""));
+                    p.sendMessage("TEST " + event.getMessage());
+                }
+            }
+        }
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         return false;
+    }
+
+    private String messageFormat(String configPath, String message) {
+        return ChatColor.translateAlternateColorCodes('&', new StaffChat().getConfig().getString(configPath));
     }
 }
