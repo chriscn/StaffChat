@@ -17,6 +17,7 @@ public class ChannelCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
             plugin.notPlayer(sender);
+            return true;
         } else {
             Player player = (Player) sender;
             List<String> channels = plugin.config.getStringList("channel");
@@ -42,7 +43,7 @@ public class ChannelCommand implements CommandExecutor {
                     player.sendMessage(ChatColor.GREEN + "You have been switched to " + channel);
 
                     // implement switching logic
-
+                    return true;
                 } else {
                     plugin.unknownChannel(player);
                     player.sendMessage(ChatColor.YELLOW + "Use /channel to list your available channels.");
