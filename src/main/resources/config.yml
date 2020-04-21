@@ -2,5 +2,12 @@ message:
   no_permission: "&cYou do not have permission to use this command"
   unknown_channel: "&cThe specified channel does not exist"
   not_player: "&cYou must be a player to use this command."
-staff:
-  prefix: "[STAFF]"
+channel:
+  staff:
+    format: "&9[STAFF] {player} {message}"
+    readPermission: "sc.staff.read"
+    writePermission: "sc.staff.write"
+  admin:
+    format: "&c[ADMIN] {player} {message}"
+    readPermission: "sc.admin.read"
+    writePermission: "sc.admin.write"
