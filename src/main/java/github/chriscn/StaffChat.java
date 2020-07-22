@@ -17,6 +17,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 
@@ -45,6 +46,12 @@ public final class StaffChat extends JavaPlugin {
         }
 
         this.config = this.getConfig();
+
+        List<String> channels = config.getStringList("channel");
+
+        for (String channel : channels) {
+            getLogger().info(LOGGING_PREFIX + " Adding channel " + channel);
+        }
     }
 
     @Override
