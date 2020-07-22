@@ -1,16 +1,22 @@
 package github.chriscn;
 
+import github.chriscn.channel.VirtualChannel;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 
 public final class StaffChat extends JavaPlugin {
 
     public final String LOGGING_PREFIX = "[STAFFCHAT]";
     public FileConfiguration config;
+
+    public HashMap<UUID, String> masterChannels = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -34,9 +40,11 @@ public final class StaffChat extends JavaPlugin {
         this.config = this.getConfig();
 
         List<String> channels = config.getStringList("channel");
+        ArrayList<VirtualChannel> assignedChannels = new ArrayList<>();
 
         for (String channel : channels) {
-            getLogger().info(LOGGING_PREFIX + " Adding channel " + channel);
+            getLogger().info(LOGGING_PREFIX + " Adding channel with name: " + channel);
+            assignedChannels.add(new VirtualChannel(channel, config.getString("channel." + channel + ".message"), config.getString("channel." + channel + ".permssion")));
         }
     }
 

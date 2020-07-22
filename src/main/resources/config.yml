@@ -3,13 +3,14 @@ message:
   no_permission: "&cYou do not have permission to use this command"
   unknown_channel: "&cThe specified channel does not exist"
   not_player: "&cYou must be a player to use this command."
+
 # Here you can define as many channels as you'd like, each with their own permission and prefix.
 ## Each channel should have a unique name (why wouldn't you?)
-## The prefix can be customised with playername, displayname, and message with {PLAYERNAME}, {DISPLAYNAME}, and {MESSAGE} respectively.
+## The message template can be customised with displayname, and message with {DISPLAYNAME}, and {MESSAGE} respectively.
 channel:
   staff:
-    prefix: "&e[STAFF] {PLAYERNAME}&f: {MESSAGE}"
+    message: "&e[STAFF] {DISPLAYNAME}&f: {MESSAGE}"
     permission: "staffchat.staff"
   admin:
-    prefix: "&c[ADMIN] {DISPLAYNAME}&f: {MESSAGE}"
+    message: "&c[ADMIN] {DISPLAYNAME}&f: {MESSAGE}"
     permission: "staffchat.admin"
