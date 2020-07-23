@@ -1,6 +1,7 @@
 package github.chriscn.channel;
 
 import github.chriscn.StaffChat;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -35,7 +36,7 @@ public class VirtualChannel implements Listener {
             if (plugin.masterChannels.get(player.getUniqueId()) == channelName) {
                 event.setCancelled(true);
 
-                String msg = messageTemplate + " " + event.getMessage();
+                String msg = ChatColor.translateAlternateColorCodes('&', messageTemplate + " " + event.getMessage());
 
                 for (Player p : Bukkit.getOnlinePlayers()) {
                     //if (p.hasPermission(this.channelPermission)) {

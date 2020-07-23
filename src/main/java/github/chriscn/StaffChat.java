@@ -1,13 +1,11 @@
 package github.chriscn;
 
 import github.chriscn.channel.VirtualChannel;
-import github.chriscn.command.SwitchChannelCommand;
+import github.chriscn.command.ChannelCommand;
 import net.md_5.bungee.api.ChatColor;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
@@ -50,23 +48,9 @@ public final class StaffChat extends JavaPlugin {
                 return true;
             }
         });
-        getCommand("channel").setExecutor((CommandExecutor) (commandSender, command, s, strings) -> {
-            Player player = (Player) commandSender;
 
-            switch (strings[0].toLowerCase()) {
-                case "admin":
-                    masterChannels.put(player.getUniqueId(), "admin");
-                    break;
-                case "staff":
-                    masterChannels.put(player.getUniqueId(), "staff");
-                    break;
-                default:
-                    player.sendMessage(ChatColor.YELLOW + "That channel doesn't exisit");
-                    break;
-            }
+        getCommand("channel").setExecutor(new ChannelCommand(this));
 
-            return true;
-        });
     }
 
     @Override
