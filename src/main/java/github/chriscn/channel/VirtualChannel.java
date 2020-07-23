@@ -16,7 +16,9 @@ public class VirtualChannel implements Listener {
     private String messageTemplate;
     private Permission channelPermission;
 
-    public VirtualChannel(String channelName, String messageTemplate, String permissionNode) {
+    public VirtualChannel(StaffChat plugin, String channelName, String messageTemplate, String permissionNode) {
+        this.plugin = plugin;
+
         this.channelName = channelName;
         this.messageTemplate = messageTemplate;
         this.channelPermission = new Permission(permissionNode);
@@ -35,9 +37,9 @@ public class VirtualChannel implements Listener {
                 String msg = messageTemplate + " " + event.getMessage();
 
                 for (Player p : Bukkit.getOnlinePlayers()) {
-                    if (p.hasPermission(this.channelPermission)) {
+                    //if (p.hasPermission(this.channelPermission)) {
                         p.sendMessage(msg);
-                    }
+                    //}
                 }
             }
         }
