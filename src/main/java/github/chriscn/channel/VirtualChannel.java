@@ -14,12 +14,14 @@ public class VirtualChannel implements Listener {
 
     private String channelName;
     private String messageTemplate;
+    private Permission channelPermission;
 
     public VirtualChannel(String channelName, String messageTemplate, String permissionNode) {
         this.channelName = channelName;
         this.messageTemplate = messageTemplate;
+        this.channelPermission = new Permission(permissionNode);
 
-        Bukkit.getPluginManager().addPermission(new Permission(permissionNode));
+        Bukkit.getPluginManager().addPermission(this.channelPermission);
     }
 
     @EventHandler
@@ -31,11 +33,11 @@ public class VirtualChannel implements Listener {
 
                 String msg = messageTemplate + " " + event.getMessage();
 
-                plugin.masterChannels.forEach((uuid, channel) -> {
-                    if (channel == channelName) {
-                        Bukkit.getPlayer(uuid).sendMessage(msg);
+                for (Player p : Bukkit.getOnlinePlayers()) {
+                    if (p.hasPermission(this.channelPermission)) {
+                        p.sendMessage(msg);
                     }
-                });
+                }
             }
         }
     }
