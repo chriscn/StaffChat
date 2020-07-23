@@ -12,8 +12,6 @@ public class PlayerDisconnect implements Listener {
     StaffChat plugin;
     public PlayerDisconnect(StaffChat instance) {
         this.plugin = instance;
-
-        Bukkit.getPluginManager().registerEvents(this, plugin);
     }
 
     @EventHandler

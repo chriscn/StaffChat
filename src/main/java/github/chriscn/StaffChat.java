@@ -2,6 +2,7 @@ package github.chriscn;
 
 import github.chriscn.channel.VirtualChannel;
 import github.chriscn.command.ChannelCommand;
+import github.chriscn.event.PlayerDisconnect;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -53,6 +54,8 @@ public final class StaffChat extends JavaPlugin {
         });
 
         getCommand("channel").setExecutor(new ChannelCommand(this));
+
+        Bukkit.getPluginManager().registerEvents(new PlayerDisconnect(this), this);
     }
 
     @Override
