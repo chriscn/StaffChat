@@ -24,6 +24,7 @@ public class VirtualChannel implements Listener {
         this.channelPermission = new Permission(permissionNode);
 
         Bukkit.getPluginManager().addPermission(this.channelPermission); // registers permission with plugin manager
+        Bukkit.getPluginManager().registerEvents(this, plugin);
         plugin.channelPermissions.put(this.channelName, this.channelPermission); // adds channel with permission to main
     }
 
