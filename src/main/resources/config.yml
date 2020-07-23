@@ -1,3 +1,4 @@
+version: 0.1
 # All customisable error messages so that you can keep it consistent across your plugins.
 message:
   no_permission: "&cYou do not have permission to use this command"
@@ -8,9 +9,15 @@ message:
 ## Each channel should have a unique name (why wouldn't you?)
 ## The message template can be customised with displayname, and message with {DISPLAYNAME}, and {MESSAGE} respectively.
 channel:
-  staff:
-    message: "&e[STAFF] {DISPLAYNAME}&f: {MESSAGE}"
-    permission: "staffchat.staff"
-  admin:
-    message: "&c[ADMIN] {DISPLAYNAME}&f: {MESSAGE}"
-    permission: "staffchat.admin"
+  - staff:
+      message: "&e[STAFF] {DISPLAYNAME}&f: {MESSAGE}"
+      permission: "staffchat.staff"
+  - admin:
+      message: "&c[ADMIN] {DISPLAYNAME}&f: {MESSAGE}"
+      permission: "staffchat.admin"
+
+rules:
+  - test1:
+      message: "Hello!"
+  - test2:
+      message: "Test2"
