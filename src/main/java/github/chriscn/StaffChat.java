@@ -3,6 +3,7 @@ package github.chriscn;
 import github.chriscn.channel.VirtualChannel;
 import github.chriscn.command.ChannelCommand;
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -37,12 +38,14 @@ public final class StaffChat extends JavaPlugin {
         getCommand("test").setExecutor(new CommandExecutor() {
             @Override
             public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+                commandSender.sendMessage("NAME | CHANNEL");
                 masterChannels.forEach((uuid, channel) -> {
-                    commandSender.sendMessage(uuid + " " + channel);
+                    commandSender.sendMessage(Bukkit.getPlayer(uuid).getDisplayName() + " | " + channel);
                 });
 
+                commandSender.sendMessage("CHANNEL | PERMISSION");
                 channelPermissions.forEach((channel, permission) -> {
-                    commandSender.sendMessage(channel + " " + permission.getName());
+                    commandSender.sendMessage(channel + " | " + permission.getName());
                 });
 
                 return true;
@@ -50,7 +53,6 @@ public final class StaffChat extends JavaPlugin {
         });
 
         getCommand("channel").setExecutor(new ChannelCommand(this));
-
     }
 
     @Override
