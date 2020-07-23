@@ -26,6 +26,7 @@ public class VirtualChannel implements Listener {
 
         Bukkit.getPluginManager().addPermission(this.channelPermission); // registers permission with plugin manager
         Bukkit.getPluginManager().registerEvents(this, plugin);
+
         plugin.channelPermissions.put(this.channelName, this.channelPermission); // adds channel with permission to main
     }
 
@@ -33,7 +34,7 @@ public class VirtualChannel implements Listener {
     public void onPlayerChatEvent(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
         if (plugin.masterChannels.containsKey(player.getUniqueId())) {
-            if (plugin.masterChannels.get(player.getUniqueId()) == channelName) {
+            if (plugin.masterChannels.get(player.getUniqueId()) == channelName.toString()) {
                 event.setCancelled(true);
 
                 String msg = ChatColor.translateAlternateColorCodes('&', messageTemplate + " " + event.getMessage());
