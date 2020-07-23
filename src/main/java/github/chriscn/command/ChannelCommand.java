@@ -8,7 +8,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
-import java.util.Set;
 
 public class ChannelCommand implements CommandExecutor {
 
@@ -21,7 +20,6 @@ public class ChannelCommand implements CommandExecutor {
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
         if (commandSender instanceof Player) {
             Player player = (Player) commandSender;
-            Set<String> channels = plugin.channelPermissions.keySet();
 
             if (args.length == 0) {
                 if (accessibleChannels(player) == "") {
@@ -46,6 +44,11 @@ public class ChannelCommand implements CommandExecutor {
                     } else {
                         player.sendMessage(ChatColor.RED + "You don't have permission for that channel.");
                     }
+                } else if (channel == "all") {
+                    if (plugin.masterChannels.containsKey(player.getUniqueId())) {
+                        plugin.masterChannels.remove(player.getUniqueId());
+                    }
+                    return true;
                 } else {
                     player.sendMessage(ChatColor.RED + "The channel specified, " + channel + ", does not exist. The channels you can access are: " + accessibleChannels(player));
                 }
