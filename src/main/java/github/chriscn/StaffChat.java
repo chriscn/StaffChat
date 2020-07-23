@@ -45,7 +45,13 @@ public final class StaffChat extends JavaPlugin {
 
         for (String channel : channels) {
             getLogger().info(LOGGING_PREFIX + " Adding channel with name: " + channel);
-            assignedChannels.add(new VirtualChannel(channel, config.getString("channel." + channel + ".message"), config.getString("channel." + channel + ".permssion")));
+            assignedChannels.add(
+                    new VirtualChannel(
+                        channel,
+                        config.getString("channel." + channel + ".message"),
+                        config.getString("channel." + channel + ".permission")
+                    )
+            );
         }
 
         getCommand("channel").setExecutor(new SwitchChannelCommand());
