@@ -1,6 +1,7 @@
 package github.chriscn;
 
 import github.chriscn.channel.VirtualChannel;
+import github.chriscn.command.SwitchChannelCommand;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -46,6 +47,9 @@ public final class StaffChat extends JavaPlugin {
             getLogger().info(LOGGING_PREFIX + " Adding channel with name: " + channel);
             assignedChannels.add(new VirtualChannel(channel, config.getString("channel." + channel + ".message"), config.getString("channel." + channel + ".permssion")));
         }
+
+        getCommand("channel").setExecutor(new SwitchChannelCommand());
+        getCommand("channel").setTabCompleter(new SwitchChannelCommand());
     }
 
     @Override
