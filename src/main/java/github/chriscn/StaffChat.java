@@ -25,6 +25,10 @@ public final class StaffChat extends JavaPlugin {
     public HashMap<UUID, String> masterChannels;
     public HashMap<String, Permission> channelPermissions;
 
+    public String noPermission;
+    public String unknownChannel;
+    public String notPlayer;
+
     @Override
     public void onEnable() {
         // Plugin startup logic
@@ -32,6 +36,10 @@ public final class StaffChat extends JavaPlugin {
         this.config = this.getConfig();
         this.masterChannels = new HashMap<>();
         this.channelPermissions = new HashMap<>();
+
+        this.noPermission = ChatColor.translateAlternateColorCodes('&', config.getString("messages.no_permission"));
+        this.notPlayer = ChatColor.translateAlternateColorCodes('&', config.getString("messages.not_player"));
+        this.unknownChannel = ChatColor.translateAlternateColorCodes('&', config.getString("messages.unknown_channel"));
 
         VirtualChannel adminChannel = new VirtualChannel(this,"admin", "&c[ADMIN]", "staffchat.admin");
         VirtualChannel staffChannel = new VirtualChannel(this,"staff", "&e[STAFF]", "staffchat.staff");
