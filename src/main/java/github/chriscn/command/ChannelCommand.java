@@ -39,12 +39,12 @@ public class ChannelCommand implements CommandExecutor {
                         } else {
                             plugin.masterChannels.remove(player.getUniqueId()); // remove them from master channels
                             plugin.masterChannels.put(player.getUniqueId(), channel);
-                            player.sendMessage(ChatColor.GREEN + "You are now chatting in " + channel);
+                            player.sendMessage(ChatColor.GREEN + "You are now chatting in "+ ChatColor.YELLOW + channel);
                         }
                     } else {
                         player.sendMessage(ChatColor.RED + "You don't have permission for that channel.");
                     }
-                } else if (channel == "all") {
+                } else if (channel.equalsIgnoreCase("all")) {
                     if (plugin.masterChannels.containsKey(player.getUniqueId())) {
                         plugin.masterChannels.remove(player.getUniqueId());
                     }
