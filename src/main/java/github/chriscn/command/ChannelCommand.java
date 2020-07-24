@@ -34,7 +34,7 @@ public class ChannelCommand implements CommandExecutor {
 
                 if (plugin.channelPermissions.containsKey(channel)) { // check that channel exists
                     if (player.hasPermission(plugin.channelPermissions.get(channel))) { // have permission for that channel
-                        if (plugin.masterChannels.get(player.getUniqueId()).equalsIgnoreCase(channel)) {
+                        if (plugin.masterChannels.get(player.getUniqueId()).equals(channel)) {
                             player.sendMessage(ChatColor.YELLOW + "You are already in this channel silly!");
                         } else {
                             plugin.masterChannels.remove(player.getUniqueId()); // remove them from master channels
