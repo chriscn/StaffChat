@@ -34,15 +34,14 @@ public class VirtualChannel implements Listener {
     public void onPlayerChatEvent(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
         if (plugin.masterChannels.containsKey(player.getUniqueId())) {
-            if (plugin.masterChannels.get(player.getUniqueId()) == channelName.toString()) {
+            if (plugin.masterChannels.get(player.getUniqueId()).equalsIgnoreCase(channelName)) {
                 event.setCancelled(true);
-
                 String msg = ChatColor.translateAlternateColorCodes('&', messageTemplate + " " + event.getMessage());
 
                 for (Player p : Bukkit.getOnlinePlayers()) {
-                    //if (p.hasPermission(this.channelPermission)) {
+                    if (p.hasPermission(this.channelPermission)) {
                         p.sendMessage(msg);
-                    //}
+                    }
                 }
             }
         }
