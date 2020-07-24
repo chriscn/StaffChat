@@ -22,7 +22,7 @@ public class ChannelCommand implements CommandExecutor {
             Player player = (Player) commandSender;
 
             if (args.length == 0) {
-                if (accessibleChannels(player) == "") {
+                if (accessibleChannels(player).equalsIgnoreCase("")) {
                     player.sendMessage("You don't have any channels you can join :-(");
                     return true;
                 } else {
@@ -34,12 +34,12 @@ public class ChannelCommand implements CommandExecutor {
 
                 if (plugin.channelPermissions.containsKey(channel)) { // check that channel exists
                     if (player.hasPermission(plugin.channelPermissions.get(channel))) { // have permission for that channel
-                        if (plugin.masterChannels.get(player.getUniqueId()) == channel) {
+                        if (plugin.masterChannels.get(player.getUniqueId()).equalsIgnoreCase(channel)) {
                             player.sendMessage(ChatColor.YELLOW + "You are already in this channel silly!");
                         } else {
                             plugin.masterChannels.remove(player.getUniqueId()); // remove them from master channels
                             plugin.masterChannels.put(player.getUniqueId(), channel);
-                            player.sendMessage(ChatColor.GREEN + "You are now chatting in "+ ChatColor.YELLOW + channel);
+                            player.sendMessage(ChatColor.GREEN + "You are now chatting in " + ChatColor.YELLOW + channel);
                         }
                     } else {
                         player.sendMessage(ChatColor.RED + "You don't have permission for that channel.");
@@ -47,6 +47,9 @@ public class ChannelCommand implements CommandExecutor {
                 } else if (channel.equalsIgnoreCase("all")) {
                     if (plugin.masterChannels.containsKey(player.getUniqueId())) {
                         plugin.masterChannels.remove(player.getUniqueId());
+                        player.sendMessage(ChatColor.GREEN + "You are now chatting in " + ChatColor.YELLOW + "all");
+                    } else {
+                        player.sendMessage(ChatColor.YELLOW + "You are already in this channel.");
                     }
                     return true;
                 } else {
@@ -75,6 +78,8 @@ public class ChannelCommand implements CommandExecutor {
                 channels.add(channel.toLowerCase());
             }
         });
+
+        channels.add("all"); // manually add the default all channel
 
         String channelString = ChatColor.GREEN + String.join(", ", channels);
 
