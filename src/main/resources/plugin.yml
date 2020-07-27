@@ -10,3 +10,5 @@ commands:
     alias: [c]
   test:
     usage: /test
+  debug:
+    usage: /debug
