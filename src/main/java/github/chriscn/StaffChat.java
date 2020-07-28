@@ -2,6 +2,7 @@ package github.chriscn;
 
 import github.chriscn.channel.VirtualChannel;
 import github.chriscn.command.ChannelCommand;
+import github.chriscn.command.DebugCommand;
 import github.chriscn.event.PlayerDisconnect;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
@@ -37,9 +38,9 @@ public final class StaffChat extends JavaPlugin {
         this.masterChannels = new HashMap<>();
         this.channelPermissions = new HashMap<>();
 
-        this.noPermission = ChatColor.translateAlternateColorCodes('&', config.getString("messages.no_permission"));
-        this.notPlayer = ChatColor.translateAlternateColorCodes('&', config.getString("messages.not_player"));
-        this.unknownChannel = ChatColor.translateAlternateColorCodes('&', config.getString("messages.unknown_channel"));
+        this.noPermission = ChatColor.translateAlternateColorCodes('&', config.getString("message.no_permission"));
+        this.notPlayer = ChatColor.translateAlternateColorCodes('&', config.getString("message.not_player"));
+        this.unknownChannel = ChatColor.translateAlternateColorCodes('&', config.getString("message.unknown_channel"));
 
         VirtualChannel adminChannel = new VirtualChannel(this,"admin", "&c[ADMIN]", "staffchat.admin");
         VirtualChannel staffChannel = new VirtualChannel(this,"staff", "&e[STAFF]", "staffchat.staff");
@@ -48,19 +49,16 @@ public final class StaffChat extends JavaPlugin {
             @Override
             public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
                 commandSender.sendMessage("NAME | CHANNEL");
-                masterChannels.forEach((uuid, channel) -> {
-                    commandSender.sendMessage(Bukkit.getPlayer(uuid).getDisplayName() + " | " + channel);
-                });
+                masterChannels.forEach((uuid, channel) -> commandSender.sendMessage(Bukkit.getPlayer(uuid).getDisplayName() + " | " + channel));
 
                 commandSender.sendMessage("CHANNEL | PERMISSION");
-                channelPermissions.forEach((channel, permission) -> {
-                    commandSender.sendMessage(channel + " | " + permission.getName());
-                });
+                channelPermissions.forEach((channel, permission) -> commandSender.sendMessage(channel + " | " + permission.getName()));
 
                 return true;
             }
         });
 
+        getCommand("debug").setExecutor(new DebugCommand(this)); // will be removed by allows for on the fly testing
         getCommand("channel").setExecutor(new ChannelCommand(this));
 
         Bukkit.getPluginManager().registerEvents(new PlayerDisconnect(this), this);
