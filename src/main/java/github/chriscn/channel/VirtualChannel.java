@@ -32,8 +32,6 @@ public class VirtualChannel implements Listener {
         this.channelWritePermission.setDescription("Allow a player to write a message to the channel " + this.channelName);
         this.channelReadPermission.setDescription("Allow a player to read messages in the channel " + this.channelName);
 
-        this.disconnectOnQuit = disconnectOnQuit;
-
         Bukkit.getPluginManager().addPermission(this.channelReadPermission); // registers permissions with plugin manager
         Bukkit.getPluginManager().addPermission(this.channelWritePermission);
 
