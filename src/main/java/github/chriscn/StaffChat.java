@@ -40,7 +40,6 @@ public final class StaffChat extends JavaPlugin {
 
         this.noPermission = ChatColor.translateAlternateColorCodes('&', config.getString("messages.no_permission"));
         this.notPlayer = ChatColor.translateAlternateColorCodes('&', config.getString("messages.not_player"));
-        this.unknownChannel = ChatColor.translateAlternateColorCodes('&', config.getString("messages.unknown_channel"));
 
         VirtualChannel adminChannel = new VirtualChannel(this,"admin", "&c[ADMIN]", "staffchat.admin", false);
         VirtualChannel staffChannel = new VirtualChannel(this,"staff", "&e[STAFF]", "staffchat.staff", true);
