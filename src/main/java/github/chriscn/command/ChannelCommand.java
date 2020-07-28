@@ -34,8 +34,8 @@ public class ChannelCommand implements TabExecutor {
             } else if (args.length == 1) { // specified a channel
                 String channel = args[0].toLowerCase();
 
-                if (plugin.channels.contains(channel)) { // check that channel exists
-                    if (player.hasPermission(plugin.channelWrite.get(channel))) { // check write permission for that channel
+                if (plugin.virtualChannels.keySet().contains(channel)) { // check that channel exists
+                    if (player.hasPermission(plugin.virtualChannels.get(channel).getWritePermission())) { // check write permission for that channel
                         if (plugin.playerChannelDB.containsKey(player.getUniqueId())) {
                             if (plugin.playerChannelDB.get(player.getUniqueId()).equalsIgnoreCase(channel)) { // check if already in channel
                                 player.sendMessage(ChatColor.YELLOW + "You are already in this channel silly!");
@@ -82,11 +82,13 @@ public class ChannelCommand implements TabExecutor {
             List<String> channels = new ArrayList<>();
             Player player = (Player) commandSender;
 
-            plugin.channelWrite.forEach((channel, permission) -> {
-                if (player.hasPermission(permission)) {
-                    channels.add(channel);
+            plugin.virtualChannels.values().forEach(virtualChannel -> {
+                if (player.hasPermission(virtualChannel.getWritePermission())) {
+                    channels.add(virtualChannel.getChannelName());
                 }
             });
+
+            channels.sort(String::compareToIgnoreCase);
 
             channels.add("all"); // manually add all channel
 
@@ -103,11 +105,13 @@ public class ChannelCommand implements TabExecutor {
     private String accessibleChannels(Player player) {
         ArrayList<String> channels = new ArrayList<>();
 
-        plugin.channelWrite.forEach((channel, permission) -> {
-            if (player.hasPermission(permission)) {
-                channels.add(channel.toLowerCase());
+        plugin.virtualChannels.values().forEach(virtualChannel -> {
+            if (player.hasPermission(virtualChannel.getWritePermission())) {
+                channels.add(virtualChannel.getChannelName());
             }
         });
+
+        channels.sort(String::compareToIgnoreCase); // sorts them alphabetically
 
         channels.add("all"); // manually add the default all channel
 

@@ -20,10 +20,8 @@ public final class StaffChat extends JavaPlugin {
     public final String LOGGING_PREFIX = "[STAFFCHAT]";
     public FileConfiguration config;
 
-    public ArrayList<String> channels;
     public HashMap<UUID, String> playerChannelDB;
-    public HashMap<String, Permission> channelRead;
-    public HashMap<String, Permission> channelWrite;
+    public HashMap<String, VirtualChannel> virtualChannels;
 
     public String noPermission;
     public String notPlayer;
@@ -33,10 +31,9 @@ public final class StaffChat extends JavaPlugin {
         // Plugin startup logic
         setupConfig();
         this.config = this.getConfig();
+
         this.playerChannelDB = new HashMap<>();
-        this.channelRead = new HashMap<>();
-        this.channelWrite = new HashMap<>();
-        this.channels = new ArrayList<>();
+        this.virtualChannels = new HashMap<>();
 
         this.noPermission = ChatColor.translateAlternateColorCodes('&', config.getString("messages.no_permission"));
         this.notPlayer = ChatColor.translateAlternateColorCodes('&', config.getString("messages.not_player"));

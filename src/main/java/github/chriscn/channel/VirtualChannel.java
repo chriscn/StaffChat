@@ -15,8 +15,8 @@ public class VirtualChannel implements Listener {
 
     private String channelName;
     private String prefix;
-    private Permission channelReadPermission;
-    private Permission channelWritePermission;
+    private Permission readPermission;
+    private Permission writePermission;
 
     public VirtualChannel(StaffChat plugin, String channelName, String prefix, String basePermissionNode) {
         this.plugin = plugin;
@@ -24,20 +24,18 @@ public class VirtualChannel implements Listener {
         this.channelName = channelName;
         this.prefix = prefix;
 
-        this.channelReadPermission = new Permission(basePermissionNode + ".read");
-        this.channelWritePermission = new Permission(basePermissionNode + ".write");
+        this.readPermission = new Permission(basePermissionNode + ".read");
+        this.writePermission = new Permission(basePermissionNode + ".write");
 
-        this.channelWritePermission.setDescription("Allow a player to write a message to the channel " + this.channelName);
-        this.channelReadPermission.setDescription("Allow a player to read messages in the channel " + this.channelName);
+        this.writePermission.setDescription("Allow a player to write a message to the channel " + this.channelName);
+        this.readPermission.setDescription("Allow a player to read messages in the channel " + this.channelName);
 
-        Bukkit.getPluginManager().addPermission(this.channelReadPermission); // registers permissions with plugin manager
-        Bukkit.getPluginManager().addPermission(this.channelWritePermission);
+        Bukkit.getPluginManager().addPermission(this.readPermission); // registers permissions with plugin manager
+        Bukkit.getPluginManager().addPermission(this.writePermission);
 
         Bukkit.getPluginManager().registerEvents(this, plugin);
 
-        plugin.channelRead.put(this.channelName, this.channelReadPermission); // add read permission to hashmap
-        plugin.channelWrite.put(this.channelName, this.channelWritePermission); // adds write permission to hashmap
-        plugin.channels.add(this.channelName); // add channel to all channels
+        plugin.virtualChannels.put(this.channelName, this);
     }
 
     @EventHandler
@@ -50,11 +48,32 @@ public class VirtualChannel implements Listener {
                 String msg = prefix + ChatColor.WHITE + ": " + event.getMessage();
 
                 for (Player p : Bukkit.getOnlinePlayers()) {
-                    if (p.hasPermission(this.channelReadPermission)) {
+                    if (p.hasPermission(this.readPermission)) {
                         p.sendMessage(msg);
                     }
                 }
             }
         }
+    }
+
+    public Permission getReadPermission() {
+        return this.readPermission;
+    }
+
+    public Permission getWritePermission() {
+        return this.writePermission;
+    }
+
+    public String getChannelName() {
+        return this.channelName;
+    }
+
+    public String getPrefix() {
+        return this.prefix;
+    }
+
+    // debugging ease of use.
+    public String getDebug() {
+        return this.channelName + " " + this.prefix + " " + this.readPermission + " " + this.writePermission;
     }
 }
