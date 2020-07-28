@@ -5,11 +5,13 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class ChannelCommand implements CommandExecutor {
+public class ChannelCommand implements TabExecutor {
 
     StaffChat plugin;
     public ChannelCommand(StaffChat instance) {
@@ -64,6 +66,23 @@ public class ChannelCommand implements CommandExecutor {
             commandSender.sendMessage(plugin.notPlayer);
             return true;
         }
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] args) {
+        if (args.length == 1) {
+            List<String> channels = new ArrayList<>();
+            Player player = (Player) commandSender;
+
+            plugin.channelWrite.forEach((channel, permission) -> {
+                if (player.hasPermission(permission)) {
+                    channels.add(channel);
+                }
+            });
+
+            return channels;
+        }
+        return null;
     }
 
     /**
