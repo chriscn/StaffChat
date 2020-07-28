@@ -12,9 +12,7 @@ default_channel_on_relog: true
 ## Each channel should have a unique name (why wouldn't you?)
 ## The message template can be customised with displayname, and message with {DISPLAYNAME}, and {MESSAGE} respectively.
 channel:
-  - staff:
-      message: "&e[STAFF] {DISPLAYNAME}&f: {MESSAGE}"
-      permission: "staffchat.staff"
-  - admin:
-      message: "&c[ADMIN] {DISPLAYNAME}&f: {MESSAGE}"
-      permission: "staffchat.admin"
+  - name: staff
+    format: "&e[STAFF]"
+  - name: admin
+    format: "&c[ADMIN]"
