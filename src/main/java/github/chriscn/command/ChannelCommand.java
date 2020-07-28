@@ -35,11 +35,16 @@ public class ChannelCommand implements TabExecutor {
                 String channel = args[0].toLowerCase();
 
                 if (plugin.channels.contains(channel)) { // check that channel exists
-                    if (player.hasPermission(plugin.channelWrite.get(channel))) { // have permission for that channel
-                        if (plugin.playerChannelDB.get(player.getUniqueId()).equals(channel)) {
-                            player.sendMessage(ChatColor.YELLOW + "You are already in this channel silly!");
+                    if (player.hasPermission(plugin.channelWrite.get(channel))) { // check write permission for that channel
+                        if (plugin.playerChannelDB.containsKey(player.getUniqueId())) {
+                            if (plugin.playerChannelDB.get(player.getUniqueId()).equalsIgnoreCase(channel)) { // check if already in channel
+                                player.sendMessage(ChatColor.YELLOW + "You are already in this channel silly!");
+                            } else {
+                                plugin.playerChannelDB.remove(player.getUniqueId()); // remove them from master channels
+                                plugin.playerChannelDB.put(player.getUniqueId(), channel);
+                                player.sendMessage(ChatColor.GREEN + "You are now chatting in " + ChatColor.YELLOW + channel);
+                            }
                         } else {
-                            plugin.playerChannelDB.remove(player.getUniqueId()); // remove them from master channels
                             plugin.playerChannelDB.put(player.getUniqueId(), channel);
                             player.sendMessage(ChatColor.GREEN + "You are now chatting in " + ChatColor.YELLOW + channel);
                         }
@@ -55,7 +60,10 @@ public class ChannelCommand implements TabExecutor {
                     }
                     return true;
                 } else {
-                    player.sendMessage(ChatColor.RED + "The channel specified, " + channel + ", does not exist or you don't have permission to access it. The channels you can access are: " + accessibleChannels(player));
+                    // TODO
+                    // Rework this error message
+                    player.sendMessage(ChatColor.RED + "The channel specified, " + ChatColor.YELLOW + channel + ChatColor.RED + ", does not exist or you don't have permission to access it.");
+                    player.sendMessage(ChatColor.RED + "The channels you can access are: " + accessibleChannels(player));
                 }
                 return true;
             } else { // too many men (arguments) :P
@@ -79,6 +87,8 @@ public class ChannelCommand implements TabExecutor {
                     channels.add(channel);
                 }
             });
+
+            channels.add("all"); // manually add all channel
 
             return channels;
         }
