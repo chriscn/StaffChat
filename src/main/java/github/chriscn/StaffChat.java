@@ -41,8 +41,8 @@ public final class StaffChat extends JavaPlugin {
         this.noPermission = ChatColor.translateAlternateColorCodes('&', config.getString("messages.no_permission"));
         this.notPlayer = ChatColor.translateAlternateColorCodes('&', config.getString("messages.not_player"));
 
-        VirtualChannel adminChannel = new VirtualChannel(this,"admin", "&c[ADMIN]", "staffchat.admin", false);
-        VirtualChannel staffChannel = new VirtualChannel(this,"staff", "&e[STAFF]", "staffchat.staff", true);
+        VirtualChannel adminChannel = new VirtualChannel(this,"admin", "&c[ADMIN]", "staffchat.admin");
+        VirtualChannel staffChannel = new VirtualChannel(this,"staff", "&e[STAFF]", "staffchat.staff");
 
         getCommand("test").setExecutor(new CommandExecutor() {
             @Override
@@ -56,6 +56,15 @@ public final class StaffChat extends JavaPlugin {
                 channelRead.forEach((channel, permission) -> {
                     commandSender.sendMessage(channel + " | " + permission.getName());
                 });
+
+
+                commandSender.sendMessage("CHANNEL | PERMISSION");
+                channelWrite.forEach((channel, permission) -> {
+                    commandSender.sendMessage(channel + " | " + permission.getName());
+                });
+
+                commandSender.sendMessage("Channels");
+                channels.forEach(channel -> commandSender.sendMessage(channel));
 
                 return true;
             }

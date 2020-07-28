@@ -19,9 +19,8 @@ public class VirtualChannel implements Listener {
     private String messageTemplate;
     private Permission channelReadPermission;
     private Permission channelWritePermission;
-    private boolean disconnectOnQuit;
 
-    public VirtualChannel(StaffChat plugin, String channelName, String messageTemplate, String basePermissionNode, boolean disconnectOnQuit) {
+    public VirtualChannel(StaffChat plugin, String channelName, String messageTemplate, String basePermissionNode) {
         this.plugin = plugin;
 
         this.channelName = channelName;
@@ -58,26 +57,6 @@ public class VirtualChannel implements Listener {
                         p.sendMessage(msg);
                     }
                 }
-            }
-        }
-    }
-
-    @EventHandler
-    public void onPlayerQuitEvent(PlayerQuitEvent event) {
-        Player player = event.getPlayer();
-        if (disconnectOnQuit) {
-            if (plugin.playerChannelDB.containsKey(player.getUniqueId())) {
-                plugin.playerChannelDB.remove(player.getUniqueId());
-            }
-        }
-    }
-
-    @EventHandler
-    public void onPlayerJoinEvent(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
-        if (!disconnectOnQuit) {
-            if (plugin.playerChannelDB.containsKey(player.getUniqueId())) {
-                player.sendMessage(ChatColor.YELLOW + "Heads up! You are chatting in " + plugin.playerChannelDB.get(player.getUniqueId()));
             }
         }
     }
