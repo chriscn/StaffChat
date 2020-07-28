@@ -8,3 +8,6 @@ commands:
   channel:
     usage: /channel <channels>
     alias: [c]
+  schat:
+    usage: /chat <channel> <message>
+    alias: [sc]
