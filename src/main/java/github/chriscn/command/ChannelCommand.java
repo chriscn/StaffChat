@@ -42,7 +42,7 @@ public class ChannelCommand implements CommandExecutor {
                             player.sendMessage(ChatColor.GREEN + "You are now chatting in " + ChatColor.YELLOW + channel);
                         }
                     } else {
-                        player.sendMessage(ChatColor.RED + "You don't have permission for that channel.");
+                        player.sendMessage(plugin.noPermission);
                     }
                 } else if (channel.equalsIgnoreCase("all")) {
                     if (plugin.playerChannelDB.containsKey(player.getUniqueId())) {
@@ -53,14 +53,15 @@ public class ChannelCommand implements CommandExecutor {
                     }
                     return true;
                 } else {
-                    player.sendMessage(ChatColor.RED + "The channel specified, " + channel + ", does not exist. The channels you can access are: " + accessibleChannels(player));
+                    player.sendMessage(ChatColor.RED + "The channel specified, " + channel + ", does not exist or you don't have permission to access it. The channels you can access are: " + accessibleChannels(player));
                 }
                 return true;
             } else { // too many men (arguments) :P
+                player.sendMessage(ChatColor.RED + "You've used too many arguments, please double check your syntax.");
                 return false;
             }
         } else {
-            commandSender.sendMessage(ChatColor.RED + "We only allow players to chat in channels at the moment.");
+            commandSender.sendMessage(plugin.notPlayer);
             return true;
         }
     }
