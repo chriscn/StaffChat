@@ -7,6 +7,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.permissions.Permission;
 
 public class VirtualChannel implements Listener {
@@ -16,13 +18,16 @@ public class VirtualChannel implements Listener {
     private String channelName;
     private String messageTemplate;
     private Permission channelPermission;
+    private boolean disconnectOnQuit;
 
-    public VirtualChannel(StaffChat plugin, String channelName, String messageTemplate, String permissionNode) {
+    public VirtualChannel(StaffChat plugin, String channelName, String messageTemplate, String permissionNode, boolean disconnectOnQuit) {
         this.plugin = plugin;
 
         this.channelName = channelName;
         this.messageTemplate = messageTemplate;
         this.channelPermission = new Permission(permissionNode);
+
+        this.disconnectOnQuit = disconnectOnQuit;
 
         Bukkit.getPluginManager().addPermission(this.channelPermission); // registers permission with plugin manager
         Bukkit.getPluginManager().registerEvents(this, plugin);
@@ -43,6 +48,26 @@ public class VirtualChannel implements Listener {
                         p.sendMessage(msg);
                     }
                 }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onPlayerQuitEvent(PlayerQuitEvent event) {
+        Player player = event.getPlayer();
+        if (disconnectOnQuit) {
+            if (plugin.masterChannels.containsKey(player.getUniqueId())) {
+                plugin.masterChannels.remove(player.getUniqueId());
+            }
+        }
+    }
+
+    @EventHandler
+    public void onPlayerJoinEvent(PlayerJoinEvent event) {
+        Player player = event.getPlayer();
+        if (!disconnectOnQuit) {
+            if (plugin.masterChannels.containsKey(player.getUniqueId())) {
+                player.sendMessage(ChatColor.YELLOW + "Heads up! You are chatting in " + plugin.masterChannels.get(player.getUniqueId()));
             }
         }
     }

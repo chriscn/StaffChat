@@ -2,14 +2,12 @@ package github.chriscn;
 
 import github.chriscn.channel.VirtualChannel;
 import github.chriscn.command.ChannelCommand;
-import github.chriscn.event.PlayerDisconnect;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -41,8 +39,8 @@ public final class StaffChat extends JavaPlugin {
         this.notPlayer = ChatColor.translateAlternateColorCodes('&', config.getString("messages.not_player"));
         this.unknownChannel = ChatColor.translateAlternateColorCodes('&', config.getString("messages.unknown_channel"));
 
-        VirtualChannel adminChannel = new VirtualChannel(this,"admin", "&c[ADMIN]", "staffchat.admin");
-        VirtualChannel staffChannel = new VirtualChannel(this,"staff", "&e[STAFF]", "staffchat.staff");
+        VirtualChannel adminChannel = new VirtualChannel(this,"admin", "&c[ADMIN]", "staffchat.admin", false);
+        VirtualChannel staffChannel = new VirtualChannel(this,"staff", "&e[STAFF]", "staffchat.staff", true);
 
         getCommand("test").setExecutor(new CommandExecutor() {
             @Override
@@ -63,7 +61,6 @@ public final class StaffChat extends JavaPlugin {
 
         getCommand("channel").setExecutor(new ChannelCommand(this));
 
-        Bukkit.getPluginManager().registerEvents(new PlayerDisconnect(this), this);
     }
 
     @Override
