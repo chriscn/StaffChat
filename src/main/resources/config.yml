@@ -1,5 +1,5 @@
 # All customisable error messages so that you can keep it consistent across your plugins.
-message:
+messages:
   no_permission: "&cYou do not have permission to use this command"
   not_player: "&cYou must be a player to use this command."
 
