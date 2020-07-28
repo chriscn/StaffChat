@@ -26,7 +26,6 @@ public final class StaffChat extends JavaPlugin {
     public HashMap<String, Permission> channelWrite;
 
     public String noPermission;
-    public String unknownChannel;
     public String notPlayer;
 
     @Override
@@ -37,6 +36,7 @@ public final class StaffChat extends JavaPlugin {
         this.playerChannelDB = new HashMap<>();
         this.channelRead = new HashMap<>();
         this.channelWrite = new HashMap<>();
+        this.channels = new ArrayList<>();
 
         this.noPermission = ChatColor.translateAlternateColorCodes('&', config.getString("messages.no_permission"));
         this.notPlayer = ChatColor.translateAlternateColorCodes('&', config.getString("messages.not_player"));
