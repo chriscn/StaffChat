@@ -2,7 +2,7 @@
 message:
   no_permission: "&cYou do not have permission to use this command"
   not_player: "&cYou must be a player to use this command."
-  
+
 # Here you can define as many channels as you'd like, each with their own permission and prefix.
 ## Each channel should have a unique name (why wouldn't you?)
 ## The message template can be customised with displayname, and message with {DISPLAYNAME}, and {MESSAGE} respectively.
