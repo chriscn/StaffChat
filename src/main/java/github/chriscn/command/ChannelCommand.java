@@ -29,7 +29,7 @@ public class ChannelCommand implements CommandExecutor {
                     player.sendMessage(ChatColor.RED + "You must specify which channel you'd like to join: " + accessibleChannels(player));
                     return false;
                 }
-            } else if (args.length == 1) { // specififed a channel
+            } else if (args.length == 1) { // specified a channel
                 String channel = args[0].toLowerCase();
 
                 if (plugin.channels.contains(channel)) { // check that channel exists
