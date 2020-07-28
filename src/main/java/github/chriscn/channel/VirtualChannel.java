@@ -7,8 +7,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.permissions.Permission;
 
 public class VirtualChannel implements Listener {
@@ -16,15 +14,15 @@ public class VirtualChannel implements Listener {
     private StaffChat plugin;
 
     private String channelName;
-    private String messageTemplate;
+    private String prefix;
     private Permission channelReadPermission;
     private Permission channelWritePermission;
 
-    public VirtualChannel(StaffChat plugin, String channelName, String messageTemplate, String basePermissionNode) {
+    public VirtualChannel(StaffChat plugin, String channelName, String prefix, String basePermissionNode) {
         this.plugin = plugin;
 
         this.channelName = channelName;
-        this.messageTemplate = messageTemplate;
+        this.prefix = prefix;
 
         this.channelReadPermission = new Permission(basePermissionNode + ".read");
         this.channelWritePermission = new Permission(basePermissionNode + ".write");
@@ -48,7 +46,11 @@ public class VirtualChannel implements Listener {
         if (plugin.playerChannelDB.containsKey(player.getUniqueId())) {
             if (plugin.playerChannelDB.get(player.getUniqueId()).equalsIgnoreCase(channelName)) {
                 event.setCancelled(true);
-                String msg = ChatColor.translateAlternateColorCodes('&', messageTemplate + " " + event.getMessage());
+                String msg = ChatColor.translateAlternateColorCodes('&',
+                        prefix + " " +
+                                player.getDisplayName() + ChatColor.WHITE + ":" +
+                                event.getMessage()
+                );
 
                 for (Player p : Bukkit.getOnlinePlayers()) {
                     if (p.hasPermission(this.channelReadPermission)) {
