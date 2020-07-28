@@ -14,32 +14,43 @@ public class VirtualChannel implements Listener {
     private StaffChat plugin;
 
     private String channelName;
-    private String messageTemplate;
-    private Permission channelPermission;
+    private String prefix;
+    private Permission channelReadPermission;
+    private Permission channelWritePermission;
 
-    public VirtualChannel(StaffChat plugin, String channelName, String messageTemplate, String permissionNode) {
+    public VirtualChannel(StaffChat plugin, String channelName, String prefix, String basePermissionNode) {
         this.plugin = plugin;
 
         this.channelName = channelName;
-        this.messageTemplate = messageTemplate;
-        this.channelPermission = new Permission(permissionNode);
+        this.prefix = prefix;
 
-        Bukkit.getPluginManager().addPermission(this.channelPermission); // registers permission with plugin manager
+        this.channelReadPermission = new Permission(basePermissionNode + ".read");
+        this.channelWritePermission = new Permission(basePermissionNode + ".write");
+
+        this.channelWritePermission.setDescription("Allow a player to write a message to the channel " + this.channelName);
+        this.channelReadPermission.setDescription("Allow a player to read messages in the channel " + this.channelName);
+
+        Bukkit.getPluginManager().addPermission(this.channelReadPermission); // registers permissions with plugin manager
+        Bukkit.getPluginManager().addPermission(this.channelWritePermission);
+
         Bukkit.getPluginManager().registerEvents(this, plugin);
 
-        plugin.channelPermissions.put(this.channelName, this.channelPermission); // adds channel with permission to main
+        plugin.channelRead.put(this.channelName, this.channelReadPermission); // add read permission to hashmap
+        plugin.channelWrite.put(this.channelName, this.channelWritePermission); // adds write permission to hashmap
+        plugin.channels.add(this.channelName); // add channel to all channels
     }
 
     @EventHandler
     public void onPlayerChatEvent(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
-        if (plugin.masterChannels.containsKey(player.getUniqueId())) {
-            if (plugin.masterChannels.get(player.getUniqueId()).equalsIgnoreCase(channelName)) {
+        if (plugin.playerChannelDB.containsKey(player.getUniqueId())) {
+            if (plugin.playerChannelDB.get(player.getUniqueId()).equalsIgnoreCase(channelName)) {
                 event.setCancelled(true);
-                String msg = ChatColor.translateAlternateColorCodes('&', messageTemplate + " " + event.getMessage());
+                String prefix = ChatColor.translateAlternateColorCodes('&', this.prefix + " " + player.getDisplayName());
+                String msg = prefix + ChatColor.WHITE + ": " + event.getMessage();
 
                 for (Player p : Bukkit.getOnlinePlayers()) {
-                    if (p.hasPermission(this.channelPermission)) {
+                    if (p.hasPermission(this.channelReadPermission)) {
                         p.sendMessage(msg);
                     }
                 }

@@ -2,15 +2,12 @@ package github.chriscn;
 
 import github.chriscn.channel.VirtualChannel;
 import github.chriscn.command.ChannelCommand;
-import github.chriscn.command.DebugCommand;
-import github.chriscn.event.PlayerDisconnect;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -23,11 +20,12 @@ public final class StaffChat extends JavaPlugin {
     public final String LOGGING_PREFIX = "[STAFFCHAT]";
     public FileConfiguration config;
 
-    public HashMap<UUID, String> masterChannels;
-    public HashMap<String, Permission> channelPermissions;
+    public ArrayList<String> channels;
+    public HashMap<UUID, String> playerChannelDB;
+    public HashMap<String, Permission> channelRead;
+    public HashMap<String, Permission> channelWrite;
 
     public String noPermission;
-    public String unknownChannel;
     public String notPlayer;
 
     @Override
@@ -35,12 +33,13 @@ public final class StaffChat extends JavaPlugin {
         // Plugin startup logic
         setupConfig();
         this.config = this.getConfig();
-        this.masterChannels = new HashMap<>();
-        this.channelPermissions = new HashMap<>();
+        this.playerChannelDB = new HashMap<>();
+        this.channelRead = new HashMap<>();
+        this.channelWrite = new HashMap<>();
+        this.channels = new ArrayList<>();
 
-        this.noPermission = ChatColor.translateAlternateColorCodes('&', config.getString("message.no_permission"));
-        this.notPlayer = ChatColor.translateAlternateColorCodes('&', config.getString("message.not_player"));
-        this.unknownChannel = ChatColor.translateAlternateColorCodes('&', config.getString("message.unknown_channel"));
+        this.noPermission = ChatColor.translateAlternateColorCodes('&', config.getString("messages.no_permission"));
+        this.notPlayer = ChatColor.translateAlternateColorCodes('&', config.getString("messages.not_player"));
 
         VirtualChannel adminChannel = new VirtualChannel(this,"admin", "&c[ADMIN]", "staffchat.admin");
         VirtualChannel staffChannel = new VirtualChannel(this,"staff", "&e[STAFF]", "staffchat.staff");
@@ -49,10 +48,23 @@ public final class StaffChat extends JavaPlugin {
             @Override
             public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
                 commandSender.sendMessage("NAME | CHANNEL");
-                masterChannels.forEach((uuid, channel) -> commandSender.sendMessage(Bukkit.getPlayer(uuid).getDisplayName() + " | " + channel));
+                playerChannelDB.forEach((uuid, channel) -> {
+                    commandSender.sendMessage(Bukkit.getPlayer(uuid).getDisplayName() + " | " + channel);
+                });
 
                 commandSender.sendMessage("CHANNEL | PERMISSION");
-                channelPermissions.forEach((channel, permission) -> commandSender.sendMessage(channel + " | " + permission.getName()));
+                channelRead.forEach((channel, permission) -> {
+                    commandSender.sendMessage(channel + " | " + permission.getName());
+                });
+
+
+                commandSender.sendMessage("CHANNEL | PERMISSION");
+                channelWrite.forEach((channel, permission) -> {
+                    commandSender.sendMessage(channel + " | " + permission.getName());
+                });
+
+                commandSender.sendMessage("Channels");
+                channels.forEach(channel -> commandSender.sendMessage(channel));
 
                 return true;
             }
@@ -61,7 +73,6 @@ public final class StaffChat extends JavaPlugin {
         getCommand("debug").setExecutor(new DebugCommand(this)); // will be removed by allows for on the fly testing
         getCommand("channel").setExecutor(new ChannelCommand(this));
 
-        Bukkit.getPluginManager().registerEvents(new PlayerDisconnect(this), this);
     }
 
     @Override
