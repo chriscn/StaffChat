@@ -93,7 +93,7 @@ public class ChannelCommand implements TabExecutor {
     private String accessibleChannels(Player player) {
         ArrayList<String> channels = new ArrayList<>();
 
-        plugin.channelRead.forEach((channel, permission) -> {
+        plugin.channelWrite.forEach((channel, permission) -> {
             if (player.hasPermission(permission)) {
                 channels.add(channel.toLowerCase());
             }
