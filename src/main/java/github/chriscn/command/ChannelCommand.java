@@ -26,7 +26,7 @@ public class ChannelCommand implements CommandExecutor {
                     player.sendMessage("You don't have any channels you can join :-(");
                     return true;
                 } else {
-                    player.sendMessage(ChatColor.RED + "You must specificy which channel you'd like to join: " + accessibleChannels(player));
+                    player.sendMessage(ChatColor.RED + "You must specify which channel you'd like to join: " + accessibleChannels(player));
                     return false;
                 }
             } else if (args.length == 1) { // specififed a channel
