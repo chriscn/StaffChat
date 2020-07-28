@@ -44,34 +44,7 @@ public final class StaffChat extends JavaPlugin {
         VirtualChannel adminChannel = new VirtualChannel(this,"admin", "&c[ADMIN]", "staffchat.admin");
         VirtualChannel staffChannel = new VirtualChannel(this,"staff", "&e[STAFF]", "staffchat.staff");
 
-        getCommand("test").setExecutor(new CommandExecutor() {
-            @Override
-            public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
-                commandSender.sendMessage("NAME | CHANNEL");
-                playerChannelDB.forEach((uuid, channel) -> {
-                    commandSender.sendMessage(Bukkit.getPlayer(uuid).getDisplayName() + " | " + channel);
-                });
-
-                commandSender.sendMessage("CHANNEL | PERMISSION");
-                channelRead.forEach((channel, permission) -> {
-                    commandSender.sendMessage(channel + " | " + permission.getName());
-                });
-
-
-                commandSender.sendMessage("CHANNEL | PERMISSION");
-                channelWrite.forEach((channel, permission) -> {
-                    commandSender.sendMessage(channel + " | " + permission.getName());
-                });
-
-                commandSender.sendMessage("Channels");
-                channels.forEach(channel -> commandSender.sendMessage(channel));
-
-                return true;
-            }
-        });
-
         getCommand("channel").setExecutor(new ChannelCommand(this));
-
     }
 
     @Override
