@@ -32,21 +32,21 @@ public class ChannelCommand implements CommandExecutor {
             } else if (args.length == 1) { // specififed a channel
                 String channel = args[0].toLowerCase();
 
-                if (plugin.channelPermissions.containsKey(channel)) { // check that channel exists
-                    if (player.hasPermission(plugin.channelPermissions.get(channel))) { // have permission for that channel
-                        if (plugin.masterChannels.get(player.getUniqueId()).equals(channel)) {
+                if (plugin.channels.contains(channel)) { // check that channel exists
+                    if (player.hasPermission(plugin.channelWrite.get(channel))) { // have permission for that channel
+                        if (plugin.playerChannelDB.get(player.getUniqueId()).equals(channel)) {
                             player.sendMessage(ChatColor.YELLOW + "You are already in this channel silly!");
                         } else {
-                            plugin.masterChannels.remove(player.getUniqueId()); // remove them from master channels
-                            plugin.masterChannels.put(player.getUniqueId(), channel);
+                            plugin.playerChannelDB.remove(player.getUniqueId()); // remove them from master channels
+                            plugin.playerChannelDB.put(player.getUniqueId(), channel);
                             player.sendMessage(ChatColor.GREEN + "You are now chatting in " + ChatColor.YELLOW + channel);
                         }
                     } else {
                         player.sendMessage(ChatColor.RED + "You don't have permission for that channel.");
                     }
                 } else if (channel.equalsIgnoreCase("all")) {
-                    if (plugin.masterChannels.containsKey(player.getUniqueId())) {
-                        plugin.masterChannels.remove(player.getUniqueId());
+                    if (plugin.playerChannelDB.containsKey(player.getUniqueId())) {
+                        plugin.playerChannelDB.remove(player.getUniqueId());
                         player.sendMessage(ChatColor.GREEN + "You are now chatting in " + ChatColor.YELLOW + "all");
                     } else {
                         player.sendMessage(ChatColor.YELLOW + "You are already in this channel.");
@@ -73,7 +73,7 @@ public class ChannelCommand implements CommandExecutor {
     private String accessibleChannels(Player player) {
         ArrayList<String> channels = new ArrayList<>();
 
-        plugin.channelPermissions.forEach((channel, permission) -> {
+        plugin.channelRead.forEach((channel, permission) -> {
             if (player.hasPermission(permission)) {
                 channels.add(channel.toLowerCase());
             }

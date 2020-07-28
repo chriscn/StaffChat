@@ -20,8 +20,10 @@ public final class StaffChat extends JavaPlugin {
     public final String LOGGING_PREFIX = "[STAFFCHAT]";
     public FileConfiguration config;
 
-    public HashMap<UUID, String> masterChannels;
-    public HashMap<String, Permission> channelPermissions;
+    public ArrayList<String> channels;
+    public HashMap<UUID, String> playerChannelDB;
+    public HashMap<String, Permission> channelRead;
+    public HashMap<String, Permission> channelWrite;
 
     public String noPermission;
     public String unknownChannel;
@@ -32,8 +34,9 @@ public final class StaffChat extends JavaPlugin {
         // Plugin startup logic
         setupConfig();
         this.config = this.getConfig();
-        this.masterChannels = new HashMap<>();
-        this.channelPermissions = new HashMap<>();
+        this.playerChannelDB = new HashMap<>();
+        this.channelRead = new HashMap<>();
+        this.channelWrite = new HashMap<>();
 
         this.noPermission = ChatColor.translateAlternateColorCodes('&', config.getString("messages.no_permission"));
         this.notPlayer = ChatColor.translateAlternateColorCodes('&', config.getString("messages.not_player"));
@@ -46,12 +49,12 @@ public final class StaffChat extends JavaPlugin {
             @Override
             public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
                 commandSender.sendMessage("NAME | CHANNEL");
-                masterChannels.forEach((uuid, channel) -> {
+                playerChannelDB.forEach((uuid, channel) -> {
                     commandSender.sendMessage(Bukkit.getPlayer(uuid).getDisplayName() + " | " + channel);
                 });
 
                 commandSender.sendMessage("CHANNEL | PERMISSION");
-                channelPermissions.forEach((channel, permission) -> {
+                channelRead.forEach((channel, permission) -> {
                     commandSender.sendMessage(channel + " | " + permission.getName());
                 });
 
