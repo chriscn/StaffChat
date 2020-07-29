@@ -4,7 +4,6 @@ import github.chriscn.StaffChat;
 import github.chriscn.channel.VirtualChannel;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
@@ -30,7 +29,7 @@ public class ChannelCommand implements TabExecutor {
             } else if (args.length == 1) { // specified a channel
                 String channel = args[0].toLowerCase();
 
-                if (plugin.virtualChannels.keySet().contains(channel)) { // check that channel exists
+                if (plugin.virtualChannels.containsKey(channel)) { // check that channel exists
                     VirtualChannel virtualChannel = plugin.virtualChannels.get(channel);
 
                     if (player.hasPermission(virtualChannel.getWritePermission())) { // check write permission for that channel
