@@ -38,8 +38,8 @@ public final class StaffChat extends JavaPlugin {
         this.noPermission = getConfigPath("messages.no_permission");
         this.notPlayer = getConfigPath("messages.not_player");
 
-        VirtualChannel adminChannel = new VirtualChannel(this,"admin", "&c[ADMIN]", "staffchat.admin");
-        VirtualChannel staffChannel = new VirtualChannel(this,"staff", "&e[STAFF]", "staffchat.staff");
+        new VirtualChannel(this,"admin", "&c[ADMIN]", "staffchat.admin");
+        new VirtualChannel(this, "staff", "&e[STAFF]", "staffchat.staff");
 
         getCommand("channel").setExecutor(new ChannelCommand(this));
         getCommand("schat").setExecutor(new ChatCommand(this));
