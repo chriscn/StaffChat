@@ -10,6 +10,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChatCommand implements TabExecutor {
@@ -37,7 +38,7 @@ public class ChatCommand implements TabExecutor {
 
                 String message = msg.toString().trim();
 
-                if (plugin.virtualChannels.keySet().contains(channel)) {
+                if (plugin.virtualChannels.containsKey(channel)) {
                     VirtualChannel virtualChannel = plugin.virtualChannels.get(channel);
                     if (player.hasPermission(virtualChannel.getWritePermission())) {
                         virtualChannel.sendToAll(player, message);
@@ -55,12 +56,12 @@ public class ChatCommand implements TabExecutor {
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] strings) {
-        if (commandSender instanceof Player) {
-
-        } else {
-
+    public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] args) {
+        if (args.length == 1) {
+            Player player = (Player) commandSender;
+            return plugin.accessibleChannel(player);
         }
         return null;
     }
+
 }
