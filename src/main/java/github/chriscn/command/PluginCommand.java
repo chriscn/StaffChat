@@ -5,6 +5,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -29,6 +30,10 @@ public class PluginCommand implements TabExecutor {
                     plugin.virtualChannels.values().forEach(vc -> {
                         player.sendMessage(vc.getDebug());
                     });
+                } else if (firstArgument == "config") {
+                    FileConfiguration test = plugin.config;
+                    player.sendMessage(test.getKeys(true).toArray().toString());
+                    
                 }
             } else {
                 return false;
