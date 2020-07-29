@@ -3,6 +3,7 @@ package github.chriscn;
 import github.chriscn.channel.VirtualChannel;
 import github.chriscn.command.ChannelCommand;
 import github.chriscn.command.ChatCommand;
+import github.chriscn.command.PluginCommand;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -44,6 +45,8 @@ public final class StaffChat extends JavaPlugin {
 
         getCommand("channel").setExecutor(new ChannelCommand(this));
         getCommand("schat").setExecutor(new ChatCommand(this));
+
+        getCommand("staffchat").setExecutor(new PluginCommand(this));
     }
 
     @Override
