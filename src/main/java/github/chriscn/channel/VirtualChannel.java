@@ -42,7 +42,7 @@ public class VirtualChannel implements Listener {
     public void onPlayerChatEvent(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
         if (plugin.playerChannelDB.containsKey(player.getUniqueId())) {
-            if (plugin.playerChannelDB.get(player.getUniqueId()).equalsIgnoreCase(channelName)) {
+            if (plugin.playerChannelDB.get(player.getUniqueId()).equals(this)) {
                 event.setCancelled(true);
 
                 sendToAll(player, event.getMessage());
