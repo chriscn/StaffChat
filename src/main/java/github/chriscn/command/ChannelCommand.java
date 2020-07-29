@@ -17,6 +17,8 @@ public class ChannelCommand implements TabExecutor {
         this.plugin = instance;
     }
 
+    final String alreadyInChannel = ChatColor.YELLOW + "You are already in this channel.";
+
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
         if (commandSender instanceof Player) {
@@ -34,7 +36,7 @@ public class ChannelCommand implements TabExecutor {
                     if (player.hasPermission(virtualChannel.getWritePermission())) { // check write permission for that channel
                         if (plugin.playerChannelDB.containsKey(player.getUniqueId())) {
                             if (plugin.playerChannelDB.get(player.getUniqueId()).equals(virtualChannel)) { // check if already in that same channel
-                                player.sendMessage(ChatColor.YELLOW + "You are already in this channel.");
+                                player.sendMessage(alreadyInChannel);
                             } else {
                                 plugin.playerChannelDB.remove(player.getUniqueId()); // remove them from master channels
                                 plugin.playerChannelDB.put(player.getUniqueId(), virtualChannel);
@@ -52,7 +54,7 @@ public class ChannelCommand implements TabExecutor {
                         plugin.playerChannelDB.remove(player.getUniqueId());
                         player.sendMessage(ChatColor.GREEN + "You are now chatting in " + ChatColor.YELLOW + "all");
                     } else {
-                        player.sendMessage(ChatColor.YELLOW + "You are already in this channel.");
+                        player.sendMessage(alreadyInChannel);
                     }
                     return true;
                 } else {
