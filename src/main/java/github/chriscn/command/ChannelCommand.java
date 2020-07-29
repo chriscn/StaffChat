@@ -1,6 +1,7 @@
 package github.chriscn.command;
 
 import github.chriscn.StaffChat;
+import github.chriscn.channel.VirtualChannel;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -30,18 +31,20 @@ public class ChannelCommand implements TabExecutor {
                 String channel = args[0].toLowerCase();
 
                 if (plugin.virtualChannels.keySet().contains(channel)) { // check that channel exists
-                    if (player.hasPermission(plugin.virtualChannels.get(channel).getWritePermission())) { // check write permission for that channel
+                    VirtualChannel virtualChannel = plugin.virtualChannels.get(channel);
+
+                    if (player.hasPermission(virtualChannel.getWritePermission())) { // check write permission for that channel
                         if (plugin.playerChannelDB.containsKey(player.getUniqueId())) {
-                            if (plugin.playerChannelDB.get(player.getUniqueId()).equalsIgnoreCase(channel)) { // check if already in channel
+                            if (plugin.playerChannelDB.get(player.getUniqueId()).equalsIgnoreCase(virtualChannel.getChannelName())) { // check if already in channel
                                 player.sendMessage(ChatColor.YELLOW + "You are already in this channel silly!");
                             } else {
                                 plugin.playerChannelDB.remove(player.getUniqueId()); // remove them from master channels
-                                plugin.playerChannelDB.put(player.getUniqueId(), channel);
-                                player.sendMessage(ChatColor.GREEN + "You are now chatting in " + ChatColor.YELLOW + channel);
+                                plugin.playerChannelDB.put(player.getUniqueId(), virtualChannel.getChannelName());
+                                player.sendMessage(ChatColor.GREEN + "You are now chatting in " + ChatColor.YELLOW + virtualChannel.getChannelName());
                             }
                         } else {
                             plugin.playerChannelDB.put(player.getUniqueId(), channel);
-                            player.sendMessage(ChatColor.GREEN + "You are now chatting in " + ChatColor.YELLOW + channel);
+                            player.sendMessage(ChatColor.GREEN + "You are now chatting in " + ChatColor.YELLOW + virtualChannel.getChannelName());
                         }
                     } else {
                         player.sendMessage(plugin.noPermission);
