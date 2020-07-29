@@ -29,19 +29,19 @@ public class ChannelCommand implements TabExecutor {
                 String channel = args[0].toLowerCase();
 
                 if (plugin.virtualChannels.containsKey(channel)) { // check that channel exists
-                    VirtualChannel virtualChannel = plugin.virtualChannels.get(channel);
+                    VirtualChannel virtualChannel = plugin.virtualChannels.get(channel); // converts string channel to a virtual channel
 
                     if (player.hasPermission(virtualChannel.getWritePermission())) { // check write permission for that channel
                         if (plugin.playerChannelDB.containsKey(player.getUniqueId())) {
-                            if (plugin.playerChannelDB.get(player.getUniqueId()).equalsIgnoreCase(virtualChannel.getChannelName())) { // check if already in channel
+                            if (plugin.playerChannelDB.get(player.getUniqueId()).equals(virtualChannel)) { // check if already in that same channel
                                 player.sendMessage(ChatColor.YELLOW + "You are already in this channel silly!");
                             } else {
                                 plugin.playerChannelDB.remove(player.getUniqueId()); // remove them from master channels
-                                plugin.playerChannelDB.put(player.getUniqueId(), virtualChannel.getChannelName());
+                                plugin.playerChannelDB.put(player.getUniqueId(), virtualChannel);
                                 player.sendMessage(ChatColor.GREEN + "You are now chatting in " + ChatColor.YELLOW + virtualChannel.getChannelName());
                             }
                         } else {
-                            plugin.playerChannelDB.put(player.getUniqueId(), channel);
+                            plugin.playerChannelDB.put(player.getUniqueId(), virtualChannel);
                             player.sendMessage(ChatColor.GREEN + "You are now chatting in " + ChatColor.YELLOW + virtualChannel.getChannelName());
                         }
                     } else {

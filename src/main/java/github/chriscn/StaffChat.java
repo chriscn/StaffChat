@@ -20,7 +20,7 @@ public final class StaffChat extends JavaPlugin {
     public final String LOGGING_PREFIX = "[STAFFCHAT]";
     public FileConfiguration config;
 
-    public HashMap<UUID, String> playerChannelDB;
+    public HashMap<UUID, VirtualChannel> playerChannelDB;
     public HashMap<String, VirtualChannel> virtualChannels;
 
     public String noPermission;
