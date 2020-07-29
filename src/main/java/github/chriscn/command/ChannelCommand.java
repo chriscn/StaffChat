@@ -24,13 +24,8 @@ public class ChannelCommand implements TabExecutor {
             Player player = (Player) commandSender;
 
             if (args.length == 0) {
-                if (accessibleChannels(player).equalsIgnoreCase("")) {
-                    player.sendMessage("You don't have any channels you can join :-(");
-                    return true;
-                } else {
-                    player.sendMessage(ChatColor.RED + "You must specify which channel you'd like to join: " + accessibleChannels(player));
-                    return false;
-                }
+                player.sendMessage(ChatColor.RED + "You must specify which channel you'd like to join: " + accessibleChannels(player));
+                return false;
             } else if (args.length == 1) { // specified a channel
                 String channel = args[0].toLowerCase();
 
@@ -119,4 +114,5 @@ public class ChannelCommand implements TabExecutor {
 
         return channelString.trim();
     }
+
 }
