@@ -8,7 +8,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ChannelCommand implements TabExecutor {
@@ -24,7 +23,7 @@ public class ChannelCommand implements TabExecutor {
             Player player = (Player) commandSender;
 
             if (args.length == 0) {
-                player.sendMessage(ChatColor.RED + "You must specify which channel you'd like to join: " + accessibleChannels(player));
+                player.sendMessage(ChatColor.RED + "You must specify which channel you'd like to join: " + ChatColor.GREEN + String.join(", ", plugin.accessibleChannel(player)));
                 return false;
             } else if (args.length == 1) { // specified a channel
                 String channel = args[0].toLowerCase();
@@ -60,7 +59,7 @@ public class ChannelCommand implements TabExecutor {
                     // TODO
                     // Rework this error message
                     player.sendMessage(ChatColor.RED + "The channel specified, " + ChatColor.YELLOW + channel + ChatColor.RED + ", does not exist or you don't have permission to access it.");
-                    player.sendMessage(ChatColor.RED + "The channels you can access are: " + accessibleChannels(player));
+                    player.sendMessage(ChatColor.RED + "The channels you can access are: " + ChatColor.GREEN + String.join(", ", plugin.accessibleChannel(player)));
                 }
                 return true;
             } else { // too many men (arguments) :P
@@ -81,18 +80,4 @@ public class ChannelCommand implements TabExecutor {
         }
         return null;
     }
-
-    /**
-     * Loops through all the channels providing a list of all the channels that specific player can access.
-     * @param player The player to check
-     * @return A green coloured list with commas of all the channels
-     */
-    private String accessibleChannels(Player player) {
-        List<String> channels = plugin.accessibleChannel(player);
-
-        String channelString = ChatColor.GREEN + String.join(", ", channels);
-
-        return channelString.trim();
-    }
-
 }
