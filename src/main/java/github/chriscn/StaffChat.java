@@ -71,6 +71,11 @@ public final class StaffChat extends JavaPlugin {
         }
     }
 
+    /**
+     * Gets all channels that a player has write access to
+     * @param player Player to check
+     * @return A List<String> of all channels that the player can write to
+     */
     public List<String> accessibleChannel(Player player) {
         if (player != null) {
             List<String> channels = new ArrayList<>();
