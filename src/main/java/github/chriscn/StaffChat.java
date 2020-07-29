@@ -35,8 +35,8 @@ public final class StaffChat extends JavaPlugin {
         this.playerChannelDB = new HashMap<>();
         this.virtualChannels = new HashMap<>();
 
-        this.noPermission = ChatColor.translateAlternateColorCodes('&', config.getString("messages.no_permission"));
-        this.notPlayer = ChatColor.translateAlternateColorCodes('&', config.getString("messages.not_player"));
+        this.noPermission = getConfigPath("messages.no_permission");
+        this.notPlayer = getConfigPath("messages.not_player");
 
         VirtualChannel adminChannel = new VirtualChannel(this,"admin", "&c[ADMIN]", "staffchat.admin");
         VirtualChannel staffChannel = new VirtualChannel(this,"staff", "&e[STAFF]", "staffchat.staff");
@@ -88,6 +88,14 @@ public final class StaffChat extends JavaPlugin {
             return channels;
         } else {
             return null;
+        }
+    }
+
+    public String getConfigPath(String configPath) {
+        if (config.getString(configPath) == null || config.getString(configPath).isEmpty()) {
+            return ChatColor.RED + "You must define a value in your config. Config path for troubleshooting " + ChatColor.YELLOW + configPath;
+        } else {
+            return ChatColor.translateAlternateColorCodes('&', config.getString(configPath));
         }
     }
 }
