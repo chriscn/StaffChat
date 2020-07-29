@@ -8,6 +8,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -66,5 +67,18 @@ public final class StaffChat extends JavaPlugin {
             getLogger().log(Level.SEVERE, LOGGING_PREFIX + " Error when loading the configuration file. ");
             e.printStackTrace();
         }
+    }
+
+    public List<String> accessibleChannel(Player player) {
+        List<String> channels = new ArrayList<>();
+        virtualChannels.values().forEach(virtualChannel -> {
+            if (player.hasPermission(virtualChannel.getWritePermission())) {
+                channels.add(virtualChannel.getChannelName());
+            }
+        });
+
+        channels.sort(String::compareToIgnoreCase);
+        channels.add("all");
+        return channels;
     }
 }

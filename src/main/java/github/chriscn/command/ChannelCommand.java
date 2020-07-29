@@ -76,20 +76,8 @@ public class ChannelCommand implements TabExecutor {
     @Override
     public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] args) {
         if (args.length == 1) {
-            List<String> channels = new ArrayList<>();
             Player player = (Player) commandSender;
-
-            plugin.virtualChannels.values().forEach(virtualChannel -> {
-                if (player.hasPermission(virtualChannel.getWritePermission())) {
-                    channels.add(virtualChannel.getChannelName());
-                }
-            });
-
-            channels.sort(String::compareToIgnoreCase);
-
-            channels.add("all"); // manually add all channel
-
-            return channels;
+            return plugin.accessibleChannel(player);
         }
         return null;
     }
@@ -100,17 +88,7 @@ public class ChannelCommand implements TabExecutor {
      * @return A green coloured list with commas of all the channels
      */
     private String accessibleChannels(Player player) {
-        ArrayList<String> channels = new ArrayList<>();
-
-        plugin.virtualChannels.values().forEach(virtualChannel -> {
-            if (player.hasPermission(virtualChannel.getWritePermission())) {
-                channels.add(virtualChannel.getChannelName());
-            }
-        });
-
-        channels.sort(String::compareToIgnoreCase); // sorts them alphabetically
-
-        channels.add("all"); // manually add the default all channel
+        List<String> channels = plugin.accessibleChannel(player);
 
         String channelString = ChatColor.GREEN + String.join(", ", channels);
 
