@@ -40,6 +40,7 @@ public final class StaffChat extends JavaPlugin {
 
         new VirtualChannel(this,"admin", "&c[ADMIN]", "staffchat.admin");
         new VirtualChannel(this, "staff", "&e[STAFF]", "staffchat.staff");
+        new VirtualChannel(this, "developer", "&a[DEVELOPER]", "staffchat.developer");
 
         getCommand("channel").setExecutor(new ChannelCommand(this));
         getCommand("schat").setExecutor(new ChatCommand(this));
