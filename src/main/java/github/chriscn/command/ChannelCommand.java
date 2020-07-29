@@ -34,7 +34,7 @@ public class ChannelCommand implements TabExecutor {
                     if (player.hasPermission(virtualChannel.getWritePermission())) { // check write permission for that channel
                         if (plugin.playerChannelDB.containsKey(player.getUniqueId())) {
                             if (plugin.playerChannelDB.get(player.getUniqueId()).equals(virtualChannel)) { // check if already in that same channel
-                                player.sendMessage(ChatColor.YELLOW + "You are already in this channel silly!");
+                                player.sendMessage(ChatColor.YELLOW + "You are already in this channel.");
                             } else {
                                 plugin.playerChannelDB.remove(player.getUniqueId()); // remove them from master channels
                                 plugin.playerChannelDB.put(player.getUniqueId(), virtualChannel);
