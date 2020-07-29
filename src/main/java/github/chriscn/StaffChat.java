@@ -24,8 +24,8 @@ public final class StaffChat extends JavaPlugin {
     public HashMap<UUID, VirtualChannel> playerChannelDB;
     public HashMap<String, VirtualChannel> virtualChannels;
 
-    public String noPermission;
-    public String notPlayer;
+    public String NO_PERMISSION;
+    public String NOT_PLAYER;
 
     @Override
     public void onEnable() {
@@ -36,8 +36,8 @@ public final class StaffChat extends JavaPlugin {
         this.playerChannelDB = new HashMap<>();
         this.virtualChannels = new HashMap<>();
 
-        this.noPermission = getConfigPath("messages.no_permission");
-        this.notPlayer = getConfigPath("messages.not_player");
+        this.NO_PERMISSION = getConfigPath("messages.no_permission");
+        this.NOT_PLAYER = getConfigPath("messages.not_player");
 
         new VirtualChannel(this,"admin", "&c[ADMIN]");
         new VirtualChannel(this, "staff", "&e[STAFF]");

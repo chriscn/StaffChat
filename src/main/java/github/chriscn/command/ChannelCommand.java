@@ -47,7 +47,7 @@ public class ChannelCommand implements TabExecutor {
                             player.sendMessage(ChatColor.GREEN + "You are now chatting in " + ChatColor.YELLOW + virtualChannel.getChannelName());
                         }
                     } else {
-                        player.sendMessage(plugin.noPermission);
+                        player.sendMessage(plugin.NO_PERMISSION);
                     }
                 } else if (channel.equalsIgnoreCase("all")) {
                     if (plugin.playerChannelDB.containsKey(player.getUniqueId())) {
@@ -69,7 +69,7 @@ public class ChannelCommand implements TabExecutor {
                 return false;
             }
         } else {
-            commandSender.sendMessage(plugin.notPlayer);
+            commandSender.sendMessage(plugin.NOT_PLAYER);
             return true;
         }
     }

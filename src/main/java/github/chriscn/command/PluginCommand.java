@@ -2,7 +2,6 @@ package github.chriscn.command;
 
 import github.chriscn.StaffChat;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -33,14 +32,14 @@ public class PluginCommand implements TabExecutor {
                 } else if (firstArgument == "config") {
                     FileConfiguration test = plugin.config;
                     player.sendMessage(test.getKeys(true).toArray().toString());
-                    
+
                 }
             } else {
                 return false;
             }
             return false;
         } else {
-            commandSender.sendMessage(plugin.notPlayer);
+            commandSender.sendMessage(plugin.NOT_PLAYER);
             return true;
         }
     }
