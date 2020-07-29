@@ -18,14 +18,14 @@ public class VirtualChannel implements Listener {
     private Permission readPermission;
     private Permission writePermission;
 
-    public VirtualChannel(StaffChat plugin, String channelName, String prefix, String basePermissionNode) {
+    public VirtualChannel(StaffChat plugin, String channelName, String prefix) {
         this.plugin = plugin;
 
         this.channelName = channelName;
         this.prefix = prefix;
 
-        this.readPermission = new Permission(basePermissionNode + ".read");
-        this.writePermission = new Permission(basePermissionNode + ".write");
+        this.readPermission = new Permission("staffchat." + this.channelName + ".read");
+        this.writePermission = new Permission("staffchat." + this.channelName + ".write");
 
         this.writePermission.setDescription("Allow a player to write a message to the channel " + this.channelName);
         this.readPermission.setDescription("Allow a player to read messages in the channel " + this.channelName);
@@ -55,7 +55,7 @@ public class VirtualChannel implements Listener {
         String msg = prefix + ChatColor.WHITE + ": " + message;
 
         for (Player p : Bukkit.getOnlinePlayers()) {
-            if (p.hasPermission(this.readPermission)) {
+            if (p.hasPermission(this.getReadPermission())) {
                 p.sendMessage(msg);
             }
         }
