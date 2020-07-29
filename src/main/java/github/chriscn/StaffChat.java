@@ -72,15 +72,19 @@ public final class StaffChat extends JavaPlugin {
     }
 
     public List<String> accessibleChannel(Player player) {
-        List<String> channels = new ArrayList<>();
-        virtualChannels.values().forEach(virtualChannel -> {
-            if (player.hasPermission(virtualChannel.getWritePermission())) {
-                channels.add(virtualChannel.getChannelName());
-            }
-        });
+        if (player != null) {
+            List<String> channels = new ArrayList<>();
+            virtualChannels.values().forEach(virtualChannel -> {
+                if (player.hasPermission(virtualChannel.getWritePermission())) {
+                    channels.add(virtualChannel.getChannelName());
+                }
+            });
 
-        channels.sort(String::compareToIgnoreCase);
-        channels.add("all");
-        return channels;
+            channels.sort(String::compareToIgnoreCase);
+            channels.add("all");
+            return channels;
+        } else {
+            return null;
+        }
     }
 }
